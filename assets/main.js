@@ -9,10 +9,17 @@
   var REPO_OWNER = 'horizon365';
   var REPO_NAME = 'SecondScreen';           // public repo hosting this site + releases
   var APP_VERSION = '1.0';
-  var DMG_ASSET = 'SecondScreen-' + APP_VERSION + '.dmg';
+
+  // One DMG per architecture. Both are assets of the same release, so the
+  // `latest/download/` shortcut resolves for each file independently.
+  var DMG_ARM64 = 'SecondScreen-' + APP_VERSION + '-arm64.dmg';
+  var DMG_X86_64 = 'SecondScreen-' + APP_VERSION + '-x86_64.dmg';
 
   var REPO_URL = 'https://github.com/' + REPO_OWNER + '/' + REPO_NAME;
-  var DOWNLOAD_URL = REPO_URL + '/releases/latest/download/' + DMG_ASSET;
+  var DOWNLOAD_URLS = {
+    arm64: REPO_URL + '/releases/latest/download/' + DMG_ARM64,
+    intel: REPO_URL + '/releases/latest/download/' + DMG_X86_64
+  };
 
   // ---------------------------------------------------------------------------
   // Bilingual metadata
@@ -72,8 +79,11 @@
     var repoLinks = document.querySelectorAll('[data-repo-link]');
     for (var i = 0; i < repoLinks.length; i++) repoLinks[i].setAttribute('href', REPO_URL);
 
-    var dlLinks = document.querySelectorAll('[data-download-link]');
-    for (var j = 0; j < dlLinks.length; j++) dlLinks[j].setAttribute('href', DOWNLOAD_URL);
+    var dlLinks = document.querySelectorAll('[data-download-arch]');
+    for (var j = 0; j < dlLinks.length; j++) {
+      var url = DOWNLOAD_URLS[dlLinks[j].getAttribute('data-download-arch')];
+      if (url) dlLinks[j].setAttribute('href', url);
+    }
   }
 
   // ---------------------------------------------------------------------------
