@@ -37,7 +37,7 @@
     }
   };
 
-  var STORAGE_KEY = 'secondscreen.lang';
+  var STORAGE_KEY = 'lanscreen.lang';
   var root = document.documentElement;
 
   function setMetaContent(selector, value) {
