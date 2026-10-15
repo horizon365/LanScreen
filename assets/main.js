@@ -1,4 +1,4 @@
-/* SecondScreen landing page — language switch, link injection, progressive enhancement. */
+/* LanScreen landing page — language switch, link injection, progressive enhancement. */
 (function () {
   'use strict';
 
@@ -7,13 +7,13 @@
   // is finalised. Everything on the page reads from here.
   // ---------------------------------------------------------------------------
   var REPO_OWNER = 'horizon365';
-  var REPO_NAME = 'SecondScreen';           // public repo hosting this site + releases
+  var REPO_NAME = 'LanScreen';           // public repo hosting this site + releases
   var APP_VERSION = '1.0';
 
   // One DMG per architecture. Both are assets of the same release, so the
   // `latest/download/` shortcut resolves for each file independently.
-  var DMG_ARM64 = 'SecondScreen-' + APP_VERSION + '-arm64.dmg';
-  var DMG_X86_64 = 'SecondScreen-' + APP_VERSION + '-x86_64.dmg';
+  var DMG_ARM64 = 'LanScreen-' + APP_VERSION + '-arm64.dmg';
+  var DMG_X86_64 = 'LanScreen-' + APP_VERSION + '-x86_64.dmg';
 
   var REPO_URL = 'https://github.com/' + REPO_OWNER + '/' + REPO_NAME;
   var DOWNLOAD_URLS = {
@@ -27,13 +27,13 @@
   var META = {
     zh: {
       lang: 'zh-CN',
-      title: 'SecondScreen — 把任何手机或平板变成 Mac 的副屏',
-      desc: 'SecondScreen 是 macOS 菜单栏应用：同一局域网内的任何手机或平板，打开浏览器即可成为 Mac 的扩展副屏，副屏无需安装任何软件。安卓支持 USB 有线模式，延迟极低。'
+      title: 'LanScreen — 把任何手机或平板变成 Mac 的副屏',
+      desc: 'LanScreen 是 macOS 菜单栏应用：同一局域网内的任何手机或平板，打开浏览器即可成为 Mac 的扩展副屏，副屏无需安装任何软件。安卓支持 USB 有线模式，延迟极低。'
     },
     en: {
       lang: 'en',
-      title: 'SecondScreen — Turn any phone or tablet into a Mac second monitor',
-      desc: 'SecondScreen is a macOS menu-bar app: any phone or tablet on your local network becomes an extended display for your Mac just by opening a browser. Nothing to install on the second screen. Android supports a wired USB mode with near-zero latency.'
+      title: 'LanScreen — Turn any phone or tablet into a Mac second monitor',
+      desc: 'LanScreen is a macOS menu-bar app: any phone or tablet on your local network becomes an extended display for your Mac just by opening a browser. Nothing to install on the second screen. Android supports a wired USB mode with near-zero latency.'
     }
   };
 
