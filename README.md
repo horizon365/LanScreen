@@ -28,7 +28,7 @@ Mirroring and casting tools only duplicate what is already on your Mac. LanScree
 - **Sharp and smooth** — 60 fps end to end: hardware H.264 encode (VideoToolbox), hardware decode (WebCodecs) and WebGL rendering.
 - **Nothing to install on the second device** — open the pairing address in the browser; no app, no account.
 - **USB wired mode for near-zero latency** — frames travel over the cable, immune to Wi-Fi jitter, and the device charges while it works.
-- **Works with any modern browser** — Android tablets and phones, iPad and iPhone, on Chrome, Edge or Samsung Internet.
+- **Works with any modern browser** — Android tablets and phones, iPad and iPhone, on Safari, Chrome, Edge or Samsung Internet.
 - **Local and private** — peer-to-peer inside your LAN, no servers in the middle, no third-party SDK, no data collected.
 - **Free, offline and open** — no sign-up, no tracking.
 
@@ -66,7 +66,7 @@ The app is ad-hoc signed, not notarized, so macOS blocks it once:
 ### Requirements
 
 - **Mac** — macOS 14 or later; Apple silicon or Intel. Screen Recording permission is required.
-- **Second screen** — any device with a WebCodecs-capable browser (a recent Chrome, Edge or Samsung Internet; Safari on iOS/iPadOS over Wi-Fi). Nothing to install.
+- **Second screen** — any device with a WebCodecs-capable browser: Safari (macOS, iOS, iPadOS), Chrome, Edge, or Samsung Internet. Nothing to install.
 - **Wired mode (optional)** — an Android device with USB debugging enabled, plus `adb` on the Mac.
 
 ### Quick start
@@ -92,7 +92,7 @@ Then open `http://localhost:8080` on the device. Frames travel over the cable in
 LanScreen doesn’t care what the second device is — an Android tablet, an older iPad, even a phone will do — and there is **nothing to install** on it, just a browser. Sidecar only pairs with an iPad, and Duet needs a client app on the second screen.
 
 **Does it support iPhone and iPad?**
-Yes. Open Safari on iOS or iPadOS and connect over Wi-Fi. The wired low-latency mode is currently Android-only.
+Yes — and **no browser settings are needed**. Open Safari on iOS or iPadOS and connect over Wi-Fi, right out of the box. The wired low-latency mode is currently Android-only.
 
 **How are latency and image quality?**
 Typically tens of milliseconds over LAN, and lower still in wired mode. Resolution ranges from 2960×1848 HiDPI down to 1480×924, at 60 fps by default.
@@ -104,7 +104,7 @@ No. The service only listens on your local network (ports 8080 / 8081) and opens
 DRM-guarded playback is protected by the system, so screen capture only receives black frames. Regular web pages, documents, code editors and dev tools are unaffected.
 
 **Can I use it over Wi-Fi instead of a cable?**
-Yes — the second screen just has to share a local network with your Mac. Note that browsers only decode video in a *secure context*: when the page is opened over plain LAN HTTP, some browsers ask for a trusted connection, and you may need to enable the browser’s “treat insecure origin as secure” flag. For the lowest latency and the most stable result, use USB wired mode.
+Yes — the second screen just has to share a local network with your Mac. **Safari on macOS / iOS / iPadOS works out of the box, no settings needed.** If you use Chrome or Edge on Android over LAN HTTP, the browser may ask for a trusted connection — in that case enable the browser's "treat insecure origin as secure" flag, or use the USB wired mode instead. For the lowest latency and the most stable result, USB wired mode is still recommended.
 
 ### Known limitations
 
@@ -133,7 +133,7 @@ LanScreen 是一款免费的 macOS 菜单栏应用，把手边**任何一台设�
 - **清晰顺滑** —— 端到端 60 fps：VideoToolbox 硬件编码 + WebCodecs 硬件解码 + WebGL 上屏。
 - **副屏零安装** —— 打开配对地址即可，不装应用、不注册账号。
 - **USB 有线模式，延迟极低** —— 画面走线缆，不受无线抖动影响，同时给设备充电。
-- **任何现代浏览器都能用** —— 安卓平板 / 手机、iPad、iPhone，Chrome、Edge、Samsung Internet 均可。
+- **任何现代浏览器都能用** —— 安卓平板 / 手机、iPad、iPhone，Safari、Chrome、Edge、Samsung Internet 均可。
 - **本地直连，保护隐私** —— 局域网内点对点传输，不经服务器、无第三方 SDK、不收集数据。
 - **免费、离线、无追踪**。
 
@@ -171,7 +171,7 @@ macOS（LanScreen.app）
 ### 系统要求
 
 - **Mac** —— macOS 14 或更高；Apple 芯片与 Intel 均可；需授予「屏幕录制」权限。
-- **副屏** —— 支持 WebCodecs 的现代浏览器（较新的 Chrome、Edge、Samsung Internet；iOS / iPadOS 走 Safari + Wi-Fi）。无需安装任何应用。
+- **副屏** —— 支持 WebCodecs 的现代浏览器均可：Safari（macOS、iOS、iPadOS）、Chrome、Edge、Samsung Internet。无需安装任何应用。
 - **有线模式（可选）** —— 开启 USB 调试的安卓设备，且 Mac 上可找到 `adb`。
 
 ### 三步上手
@@ -197,7 +197,7 @@ adb reverse tcp:8081 tcp:8081
 LanScreen 不挑副屏设备：安卓平板、旧 iPad、甚至一部手机都能用，而且副屏**无需安装任何应用**。Sidecar 只能配 iPad，Duet 需要在副屏上装客户端。
 
 **支持 iPhone 和 iPad 吗？**
-支持。iOS / iPadOS 上用 Safari 通过 Wi-Fi 即可使用；USB 有线低延迟模式目前仅支持安卓。
+支持，而且**无需在浏览器里额外设置任何开关**。iOS / iPadOS 上用 Safari 通过 Wi-Fi 即可开箱即用；USB 有线低延迟模式目前仅支持安卓。
 
 **延迟和画质如何？**
 局域网通常只有几十毫秒，USB 有线模式下更低。分辨率可选 2960×1848 HiDPI 到 1480×924，默认 60 fps。
@@ -209,7 +209,7 @@ LanScreen 不挑副屏设备：安卓平板、旧 iPad、甚至一部手机都�
 受 DRM 保护的内容由系统保护，屏幕采集只能拿到黑帧；普通网页、文档、代码编辑器、开发工具都不受影响。
 
 **不插线、只用 Wi-Fi 可以吗？**
-可以，副屏与 Mac 处于同一局域网即可。注意：浏览器只在**安全上下文**下解码视频，通过局域网 HTTP 打开页面时，部分浏览器会要求可信连接，此时可能需要在浏览器里开启「将不安全来源视为安全」的开关。追求最低延迟与最稳定表现，推荐使用 USB 有线模式。
+可以，副屏与 Mac 处于同一局域网即可。**Safari（macOS / iOS / iPadOS）开箱即用，无需任何设置。** 若使用 Chrome 或 Edge 在安卓上通过局域网 HTTP 访问，浏览器可能会要求可信连接，此时可在浏览器里开启「将不安全来源视为安全」的开关，或者改用 USB 有线模式。追求最低延迟与最稳定表现，推荐使用 USB 有线模式。
 
 ### 已知限制
 
