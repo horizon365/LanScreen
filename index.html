@@ -511,7 +511,7 @@ adb reverse tcp:8081 tcp:8081</pre>
       <article class="card reveal">
         <div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm5 17a1 1 0 1 0 0 2 1 1 0 0 0 0-2Z"/></svg></div>
         <h3><span class="zh">任何设备都能用</span><span class="en">Works with any device</span></h3>
-        <p><span class="zh">只要浏览器支持 WebCodecs：Safari（macOS / iOS / iPadOS 开箱即用）、Chrome、Edge、Samsung Internet 均可；安卓平板、iPad、旧手机都行。</span><span class="en">Any browser with WebCodecs support works: Safari (macOS, iOS, iPadOS, out of the box), Chrome, Edge or Samsung Internet — Android tablets, iPads, older phones all fine.</span></p>
+        <p><span class="zh">只要浏览器支持 WebCodecs：Safari（macOS / iOS / iPadOS 开箱即用）、Chrome、Edge、Samsung Internet 均可；安卓平板、iPad、旧手机都行。老旧设备可选「Compatible」模式（1480×924、6 Mbps），解码压力只有高清模式的五分之一，多年以前的机器也能流畅跑满 60 fps。</span><span class="en">Any browser with WebCodecs support works: Safari (macOS, iOS, iPadOS, out of the box), Chrome, Edge or Samsung Internet — Android tablets, iPads, older phones all fine. Aging devices can pick the “Compatible” preset (1480×924, 6 Mbps): one fifth the decode load of the sharp mode, so even years-old hardware holds a smooth 60 fps.</span></p>
       </article>
       <article class="card reveal">
         <div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4V1L8 5l4 4V6a6 6 0 1 1-6 6H4a8 8 0 1 0 8-8Z"/></svg></div>
@@ -637,8 +637,12 @@ adb reverse tcp:8081 tcp:8081</pre>
       </div>
       <p class="dl-meta">
         <span class="zh">适用于 macOS 14+ · 当前版本 </span><span class="en">For macOS 14+ · Current version </span>
-        <code>1.1</code>
+        <code>1.2</code>
         <span class="zh"> · Apple 芯片与 Intel 分开提供安装包</span><span class="en"> · separate builds for Apple silicon and Intel</span>
+      </p>
+      <p class="dl-hint" style="margin-top:18px">
+        <span class="zh"><strong>1.2 新特性：</strong>修复副屏打字 / 操作的粘滞感——虚拟显示器现在保持唤醒，帧间隔中位数从 114ms 降到 17ms（正好一个 60Hz 帧）；编码器改为「只保留最新帧」，不再积压；USB 传输禁用 Nagle 延迟；码率按分辨率分档（30/15/6 Mbps）。老旧设备用「Compatible」模式即可获得流畅 60 fps。</span>
+        <span class="en"><strong>What’s new in 1.2:</strong> fixes the sluggish typing / interaction on the second screen — the virtual display now stays awake, cutting the median frame interval from 114ms to 17ms (exactly one 60Hz frame); the encoder keeps only the newest frame instead of piling up a backlog; USB transport disables Nagle; bitrate now scales per preset (30/15/6 Mbps). Older devices get a smooth 60 fps with the “Compatible” preset.</span>
       </p>
     </div>
   </div>
@@ -669,7 +673,7 @@ adb reverse tcp:8081 tcp:8081</pre>
       </details>
       <details class="reveal">
         <summary><span class="zh">延迟和画质表现如何？</span><span class="en">How are latency and image quality?</span></summary>
-        <div class="ans"><span class="zh">局域网上通常只有几十毫秒，USB 有线模式下更低。分辨率可选 2960×1848 HiDPI 到 1480×924，默认 60 fps。</span><span class="en">Typically tens of milliseconds over LAN, and lower still in wired mode. Resolution ranges from 2960×1848 HiDPI down to 1480×924, at 60 fps by default.</span></div>
+        <div class="ans"><span class="zh">局域网上通常只有几十毫秒，USB 有线模式下更低；1.2 起打字等交互操作已做到接近本地手感。分辨率可选 2960×1848 HiDPI 到 1480×924，默认 60 fps。性能较弱的老旧设备建议选「Compatible」模式（1480×924、6 Mbps），解码压力小，依旧流畅。</span><span class="en">Typically tens of milliseconds over LAN, and lower still in wired mode; since 1.2, interactive work like typing feels near-local. Resolution ranges from 2960×1848 HiDPI down to 1480×924, at 60 fps by default. For older, weaker devices pick the “Compatible” preset (1480×924, 6 Mbps) — much lighter to decode, still smooth.</span></div>
       </details>
       <details class="reveal">
         <summary><span class="zh">安全吗？端口会暴露到公网吗？</span><span class="en">Is it safe? Are ports exposed to the internet?</span></summary>

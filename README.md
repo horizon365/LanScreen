@@ -52,8 +52,8 @@ Second screen's browser
 
 | File | Mac |
 | --- | --- |
-| [LanScreen-1.1-arm64.dmg](https://github.com/horizon365/LanScreen/releases/latest/download/LanScreen-1.1-arm64.dmg) | Apple silicon (M1 / M2 / M3 / M4) |
-| [LanScreen-1.1-x86_64.dmg](https://github.com/horizon365/LanScreen/releases/latest/download/LanScreen-1.1-x86_64.dmg) | Intel |
+| [LanScreen-1.2-arm64.dmg](https://github.com/horizon365/LanScreen/releases/latest/download/LanScreen-1.2-arm64.dmg) | Apple silicon (M1 / M2 / M3 / M4) |
+| [LanScreen-1.2-x86_64.dmg](https://github.com/horizon365/LanScreen/releases/latest/download/LanScreen-1.2-x86_64.dmg) | Intel |
 
 Not sure which to pick? Open the Apple menu → **About This Mac** and look at the **Chip** line: “Apple M…” means Apple silicon, “Intel” means Intel.
 
@@ -62,6 +62,14 @@ The app is ad-hoc signed, not notarized, so macOS blocks it once:
 1. Open the DMG and drag **LanScreen** into **Applications**.
 2. On macOS 14, right-click the app and choose **Open**; on macOS 15 or later, allow it under **System Settings → Privacy & Security → Open Anyway**.
 3. Approve **Screen Recording** when macOS asks.
+
+### What’s new in 1.2
+
+- **Typing finally feels local.** The virtual display used to be power-managed to sleep whenever no visible window sat on it, so frames trickled out at ~9 fps with 500ms gaps — every keystroke felt gummy. LanScreen now keeps a transparent keep-alive window on the virtual display: the median frame interval drops from **114ms to 17ms** (exactly one 60Hz frame) and a changing screen streams at a steady ~57 fps.
+- **No encoder backlog.** The H.264 encoder now keeps only the newest frame while it is busy (latest-frame-wins), so a slow moment can never snowball into growing input lag.
+- **Snappier USB transport.** TCP_NODELAY disables Nagle buffering — every frame is flushed the instant it is encoded.
+- **Bitrate matches the preset.** Sharp 30 Mbps / Balanced 15 Mbps / Compatible 6 Mbps, instead of one-size-fits-all. Less wasted bandwidth, less decode pressure.
+- **Better to older devices.** The **Compatible** preset (1480×924 @ 1×, 6 Mbps) is built for aging phones and tablets: a fifth of the Sharp mode’s decode load, still a smooth 60 fps. An old iPad or Android tablet that stuttered before should now just work.
 
 ### Requirements
 
@@ -95,7 +103,7 @@ LanScreen doesn’t care what the second device is — an Android tablet, an old
 Yes — and **no browser settings are needed**. Open Safari on iOS or iPadOS and connect over Wi-Fi, right out of the box. The wired low-latency mode is currently Android-only.
 
 **How are latency and image quality?**
-Typically tens of milliseconds over LAN, and lower still in wired mode. Resolution ranges from 2960×1848 HiDPI down to 1480×924, at 60 fps by default.
+Typically tens of milliseconds over LAN, and lower still in wired mode — since 1.2, interactive work like typing feels near-local. Resolution ranges from 2960×1848 HiDPI down to 1480×924, at 60 fps by default. Older or weaker devices should pick the **Compatible** preset (1480×924, 6 Mbps): much lighter to decode, still smooth.
 
 **Is it safe? Are ports exposed to the internet?**
 No. The service only listens on your local network (ports 8080 / 8081) and opens nothing to the internet; even devices on the same subnet need to know your pairing address to connect.
@@ -157,8 +165,8 @@ macOS（LanScreen.app）
 
 | 文件 | 适用 Mac |
 | --- | --- |
-| [LanScreen-1.1-arm64.dmg](https://github.com/horizon365/LanScreen/releases/latest/download/LanScreen-1.1-arm64.dmg) | Apple 芯片（M1 / M2 / M3 / M4） |
-| [LanScreen-1.1-x86_64.dmg](https://github.com/horizon365/LanScreen/releases/latest/download/LanScreen-1.1-x86_64.dmg) | Intel |
+| [LanScreen-1.2-arm64.dmg](https://github.com/horizon365/LanScreen/releases/latest/download/LanScreen-1.2-arm64.dmg) | Apple 芯片（M1 / M2 / M3 / M4） |
+| [LanScreen-1.2-x86_64.dmg](https://github.com/horizon365/LanScreen/releases/latest/download/LanScreen-1.2-x86_64.dmg) | Intel |
 
 不确定选哪个？点左上角  → 「关于本机」→ 看「芯片」一栏：写着 Apple M… 就选 Apple 芯片，写着 Intel 就选 Intel。
 
@@ -167,6 +175,14 @@ macOS（LanScreen.app）
 1. 打开 DMG，把 **LanScreen** 拖进「应用程序」。
 2. macOS 14 上右键点图标选「打开」；macOS 15 及以上到「系统设置 → 隐私与安全性」点「仍要打开」。
 3. 按提示授予「屏幕录制」权限。
+
+### 1.2 更新内容
+
+- **打字终于有了本地手感。** 之前虚拟显示器上没有可见窗口时会被系统省电休眠，推帧只有 ~9 fps 且夹杂 500ms 空窗，每次敲击都发粘。现在 LanScreen 在虚拟显示器上保留一扇透明的保活窗口：帧间隔中位数从 **114ms 降到 17ms**（正好一个 60Hz 帧），画面变化时稳定 ~57 fps。
+- **编码不再积压。** H.264 编码器繁忙时只保留最新一帧（latest-frame-wins），短暂的卡顿不会滚雪球成越来越大的输入延迟。
+- **USB 传输更快。** TCP_NODELAY 禁用 Nagle 缓冲，每帧编码完成即刻发出。
+- **码率按档位匹配。** Sharp 30 Mbps / Balanced 15 Mbps / Compatible 6 Mbps，不再一刀切，带宽与解码压力都更省。
+- **对老旧设备更友好。** **Compatible** 模式（1480×924 1×、6 Mbps）专为旧手机、旧平板准备：解码压力只有高清模式的五分之一，依旧流畅 60 fps。以前卡顿的老 iPad、老安卓平板现在可以直接用。
 
 ### 系统要求
 
@@ -200,7 +216,7 @@ LanScreen 不挑副屏设备：安卓平板、旧 iPad、甚至一部手机都�
 支持，而且**无需在浏览器里额外设置任何开关**。iOS / iPadOS 上用 Safari 通过 Wi-Fi 即可开箱即用；USB 有线低延迟模式目前仅支持安卓。
 
 **延迟和画质如何？**
-局域网通常只有几十毫秒，USB 有线模式下更低。分辨率可选 2960×1848 HiDPI 到 1480×924，默认 60 fps。
+局域网通常只有几十毫秒，USB 有线模式下更低——1.2 起打字等交互已接近本地手感。分辨率可选 2960×1848 HiDPI 到 1480×924，默认 60 fps。性能较弱的老旧设备建议选 **Compatible** 模式（1480×924、6 Mbps）：解码压力小，依旧流畅。
 
 **安全吗？端口会暴露到公网吗？**
 不会。服务只在局域网内监听（端口 8080 / 8081），不对外开放任何端口；即便同网段设备，也需要知道配对地址才能连接。

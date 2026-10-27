@@ -8,7 +8,7 @@
   // ---------------------------------------------------------------------------
   var REPO_OWNER = 'horizon365';
   var REPO_NAME = 'LanScreen';           // public repo hosting this site + releases
-  var APP_VERSION = '1.1';
+  var APP_VERSION = '1.2';
 
   // One DMG per architecture. Both are assets of the same release, so the
   // `latest/download/` shortcut resolves for each file independently.
