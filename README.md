@@ -52,8 +52,8 @@ Second screen's browser
 
 | File | Mac |
 | --- | --- |
-| [LanScreen-1.2-arm64.dmg](https://github.com/horizon365/LanScreen/releases/latest/download/LanScreen-1.2-arm64.dmg) | Apple silicon (M1 / M2 / M3 / M4) |
-| [LanScreen-1.2-x86_64.dmg](https://github.com/horizon365/LanScreen/releases/latest/download/LanScreen-1.2-x86_64.dmg) | Intel |
+| [LanScreen-1.2.1-arm64.dmg](https://github.com/horizon365/LanScreen/releases/latest/download/LanScreen-1.2.1-arm64.dmg) | Apple silicon (M1 / M2 / M3 / M4) |
+| [LanScreen-1.2.1-x86_64.dmg](https://github.com/horizon365/LanScreen/releases/latest/download/LanScreen-1.2.1-x86_64.dmg) | Intel |
 
 Not sure which to pick? Open the Apple menu → **About This Mac** and look at the **Chip** line: “Apple M…” means Apple silicon, “Intel” means Intel.
 
@@ -62,6 +62,14 @@ The app is ad-hoc signed, not notarized, so macOS blocks it once:
 1. Open the DMG and drag **LanScreen** into **Applications**.
 2. On macOS 14, right-click the app and choose **Open**; on macOS 15 or later, allow it under **System Settings → Privacy & Security → Open Anyway**.
 3. Approve **Screen Recording** when macOS asks.
+
+### What’s new in 1.2.1 (upgrade strongly recommended)
+
+**v1.2 contained three sleep/wake crashes.** Every 1.2 DMG auto-exits after sleep → wake. All three fixed in 1.2.1:
+
+- **AppKit main-thread trap** — ScreenCaptureKit's `didStopWithError` callback runs on a private queue; calling `NSWindow.close()` from there trapped. 1.2.1 hops to main before any AppKit touch.
+- **CVPixelBuffer use-after-free** — The static-screen timer cached raw `CVPixelBuffer`s; SCK recycles its internal pixel pool across sleep, so the next timer fire dereferenced freed memory. 1.2.1 caches **encoded AnnexB `Data`** instead — zero dependency on SCK internals.
+- **Stale AppKit references on detached windows** — Sleep detaches every `NSWindow` from WindowServer and tears down underlying `CGSConnection` objects. Calling `-close()` on a detached window walked freed AppKit state. 1.2.1 no longer calls `-close()` manually; it just drops the reference and lets AppKit handle teardown on `NSWindow.deinit`, which is the only path that tolerates the detached state.
 
 ### What’s new in 1.2
 
@@ -175,6 +183,13 @@ macOS（LanScreen.app）
 1. 打开 DMG，把 **LanScreen** 拖进「应用程序」。
 2. macOS 14 上右键点图标选「打开」；macOS 15 及以上到「系统设置 → 隐私与安全性」点「仍要打开」。
 3. 按提示授予「屏幕录制」权限。
+
+### 1.2.1 更新（强烈建议升级）
+
+**v1.2 有三条睡眠/唤醒崩溃路径。** 所有 1.2 安装包在睡眠唤醒后会自动退出。1.2.1 全部修好：
+- AppKit 主线程断言：SCK 的 `didStopWithError` 回调跑在私有队列，直接调 `NSWindow.close()` 会 trap。1.2.1 所有 AppKit 操作统一 hop 主线程。
+- CVPixelBuffer 野指针：静态画面 timer 缓存原始 CVPixelBuffer，睡眠时 SCK 释放了内部 pixel pool，下次 timer 触发就踩野指针。1.2.1 改为缓存**已编码的 AnnexB Data**，彻底切断对 SCK 内部对象的依赖。
+- detached NSWindow 野引用：睡眠后 WindowServer 把所有 NSWindow detach 掉、底层 CGSConnection 已释放，此时手动 `-close()` 走进 AppKit 野引用。1.2.1 不再手动 `-close()`，只置 nil 让 AppKit 在 `NSWindow.deinit` 路径上自己 tear down——这是 detach 后唯一可靠的处理方式。
 
 ### 1.2 更新内容
 

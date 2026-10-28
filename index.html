@@ -637,12 +637,16 @@ adb reverse tcp:8081 tcp:8081</pre>
       </div>
       <p class="dl-meta">
         <span class="zh">适用于 macOS 14+ · 当前版本 </span><span class="en">For macOS 14+ · Current version </span>
-        <code>1.2</code>
+        <code>1.2.1</code>
         <span class="zh"> · Apple 芯片与 Intel 分开提供安装包</span><span class="en"> · separate builds for Apple silicon and Intel</span>
       </p>
       <p class="dl-hint" style="margin-top:18px">
-        <span class="zh"><strong>1.2 新特性：</strong>修复副屏打字 / 操作的粘滞感——虚拟显示器现在保持唤醒，帧间隔中位数从 114ms 降到 17ms（正好一个 60Hz 帧）；编码器改为「只保留最新帧」，不再积压；USB 传输禁用 Nagle 延迟；码率按分辨率分档（30/15/6 Mbps）。老旧设备用「Compatible」模式即可获得流畅 60 fps。</span>
-        <span class="en"><strong>What’s new in 1.2:</strong> fixes the sluggish typing / interaction on the second screen — the virtual display now stays awake, cutting the median frame interval from 114ms to 17ms (exactly one 60Hz frame); the encoder keeps only the newest frame instead of piling up a backlog; USB transport disables Nagle; bitrate now scales per preset (30/15/6 Mbps). Older devices get a smooth 60 fps with the “Compatible” preset.</span>
+        <span class="zh"><strong>1.2.1 补丁更新（强烈建议升级）：</strong>修复 v1.2 的三条睡眠/唤醒崩溃——AppKit 主线程断言、CVPixelBuffer 野指针、detached NSWindow 手动 -close 野引用。v1.2 用户必升。</span>
+        <span class="en"><strong>1.2.1 patch (upgrade strongly recommended):</strong> fixes three sleep/wake crashes introduced in 1.2 — AppKit main-thread trap, CVPixelBuffer use-after-free, and stale AppKit references when manually -close()ing a detached window. 1.2 users must upgrade.</span>
+      </p>
+      <p class="dl-hint" style="margin-top:14px">
+        <span class="zh"><strong>1.2 核心特性：</strong>修复副屏打字粘滞（帧间隔 114ms→17ms）；编码器 latest-frame-wins；USB 禁用 Nagle；码率按档位 30/15/6 Mbps。老旧设备用「Compatible」模式（1480×924、6 Mbps）流畅 60 fps。</span>
+        <span class="en"><strong>What’s new in 1.2:</strong> fixes sluggish typing (frame interval 114ms → 17ms); encoder latest-frame-wins; USB transport disables Nagle; bitrate scales per preset (30/15/6 Mbps). Older devices run smooth 60 fps with the “Compatible” preset (1480×924, 6 Mbps).</span>
       </p>
     </div>
   </div>
